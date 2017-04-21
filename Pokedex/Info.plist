@@ -34,5 +34,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Minecraft.ttf</string>
+		<string>PokemonS.ttf</string>
+	</array>
 </dict>
 </plist>
