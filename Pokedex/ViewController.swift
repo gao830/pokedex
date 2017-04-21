@@ -11,19 +11,26 @@ import AVFoundation
 
 //import Alamofire
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
 
     @IBOutlet weak var collection: UICollectionView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var pokemon = [Pokemon]()
+    var filteredPokemon = [Pokemon]()
+    var inSearchMode = false
     var musicPlayer: AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collection.dataSource = self
         collection.delegate = self
+        searchBar.delegate = self
+        searchBar.returnKeyType = UIReturnKeyType.done
         parsePokemonCSV()
         initAudio()
+        searchBar.showsCancelButton = true
     }
     
     func initAudio() {
@@ -32,7 +39,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             musicPlayer = try AVAudioPlayer(contentsOf: URL(string: path)!)
             musicPlayer.prepareToPlay()
             musicPlayer.numberOfLoops = -1
-            musicPlayer.play()
+//            musicPlayer.play()
         } catch let err as NSError{
             print(err.debugDescription)
         }
@@ -59,13 +66,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        print(pokemon)
     }
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell {
-            let poke = pokemon[indexPath.row]
-            cell.configureCell(pokemon: poke)
+            let poke : Pokemon!
+            if inSearchMode {
+                poke = filteredPokemon[indexPath.row]
+                cell.configureCell(pokemon: poke)
+            } else {
+                poke = pokemon[indexPath.row]
+                cell.configureCell(pokemon: poke)
+            }
             
-//            let pokemon = Pokemon(name: "Pokemon", pokedexId: indexPath.row + 1)
-//            cell.configureCell(pokemon: pokemon)
             return cell
             
         } else {
@@ -76,10 +89,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        view.endEditing(true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if inSearchMode {
+            return filteredPokemon.count
+        }
         return pokemon.count
     }
     
@@ -103,6 +119,38 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == nil || searchBar.text == ""  {
+            inSearchMode = false
+            collection.reloadData()
+            
+            view.endEditing(true)
+        } else {
+            inSearchMode = true
+            let text = searchBar.text!
+            
+            filteredPokemon = pokemon.filter({$0.name.localizedStandardRange(of: text) != nil})
+            collection.reloadData()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if inSearchMode {
+            searchBar.text = ""
+            inSearchMode = false
+            collection.reloadData()
+            view.endEditing(true)
+            self.collection?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+        
+    }
 }
 
