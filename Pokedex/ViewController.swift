@@ -31,6 +31,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         parsePokemonCSV()
         initAudio()
         searchBar.showsCancelButton = true
+        collection.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
     }
     
     func initAudio() {
@@ -118,27 +119,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     }
+//    
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        searchBar.resignFirstResponder()
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        view.endEditing(true)
-    }
+//    
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        view.endEditing(true)
+//    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == nil || searchBar.text == ""  {
             inSearchMode = false
+            
             collection.reloadData()
             
             view.endEditing(true)
         } else {
             inSearchMode = true
             let text = searchBar.text!
-            
             filteredPokemon = pokemon.filter({$0.name.localizedStandardRange(of: text) != nil})
             collection.reloadData()
+            if filteredPokemon.count != 0 {
+                self.collection?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+            }
+            
+
         }
     }
     
@@ -148,7 +158,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             inSearchMode = false
             collection.reloadData()
             view.endEditing(true)
-            self.collection?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            self.collection?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+        } else {
+            view.endEditing(true)
         }
         
     }
