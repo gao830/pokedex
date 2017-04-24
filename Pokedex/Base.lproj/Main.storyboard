@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,10 +15,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainVC" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -144,11 +144,50 @@
                     <connections>
                         <outlet property="collection" destination="nd3-GQ-E5Q" id="OcA-45-Tf4"/>
                         <outlet property="searchBar" destination="NgR-EB-RjB" id="yU8-SZ-WK6"/>
+                        <segue destination="YCZ-tB-MEH" kind="show" identifier="PokemonDetailVC" id="Cna-jH-tER"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="137.18140929535232"/>
+            <point key="canvasLocation" x="-15" y="152"/>
+        </scene>
+        <!--Pokemon DetailVC-->
+        <scene sceneID="WGo-qd-9kH">
+            <objects>
+                <viewController id="YCZ-tB-MEH" customClass="PokemonDetailVC" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ea6-Cg-cEr"/>
+                        <viewControllerLayoutGuide type="bottom" id="YNa-Zd-KFZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GU4-Fq-zJo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bg-U4-Wkp">
+                                <rect key="frame" x="98" y="317" width="178" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="fgR-y2-h3u"/>
+                                    <constraint firstAttribute="width" constant="178" id="qZH-xd-2dP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2bg-U4-Wkp" firstAttribute="leading" secondItem="GU4-Fq-zJo" secondAttribute="leadingMargin" constant="82" id="Pec-Pp-QvY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2bg-U4-Wkp" secondAttribute="trailing" constant="83" id="gm0-cI-fej"/>
+                            <constraint firstItem="2bg-U4-Wkp" firstAttribute="top" secondItem="Ea6-Cg-cEr" secondAttribute="bottom" constant="297" id="xvg-1z-Z2k"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="name" destination="2bg-U4-Wkp" id="kdg-Iv-VaE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kni-xS-25V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="824.79999999999995" y="151.57421289355324"/>
         </scene>
     </scenes>
     <resources>
