@@ -7,17 +7,27 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PokemonDetailVC: UIViewController {
 
     var pokemon: Pokemon!
+    var musicPlayer: AVAudioPlayer!
     
-    @IBOutlet weak var name: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        name.text = pokemon.name
+        
         
     }
+//    @IBAction func musicPressed(_ sender: UIButton) {
+//        if musicPlayer.isPlaying {
+//            musicPlayer.pause()
+//            sender.alpha = 0.2
+//        } else {
+//            musicPlayer.play()
+//            sender.alpha = 1.0
+//        }
+//    }
 
 }
